@@ -44,7 +44,7 @@ export default function ChatList() {
         return (
           <ListItem alignItems="flex-start" key={chat.id}>
             <ListItemAvatar>
-              {chat.type === "gpt" ? (
+              {chat.message.role !== "user" ? (
                 <Image
                   src="/chatgpt.svg"
                   alt="chatgpt Logo"
@@ -57,7 +57,7 @@ export default function ChatList() {
               )}
             </ListItemAvatar>
             <PreWrapper
-              dangerouslySetInnerHTML={{ __html: chat.content }}
+              dangerouslySetInnerHTML={{ __html: chat.parsedHtml }}
             ></PreWrapper>
           </ListItem>
         );

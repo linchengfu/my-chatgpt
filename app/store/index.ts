@@ -3,8 +3,11 @@ import { atomWithStorage } from "jotai/utils";
 
 export type ChatMessage = {
   id: string;
-  type: "gpt" | "user";
-  content: string;
+  message: {
+    role: "user" | "assistant" | "system" | "tool";
+    content: string;
+  };
+  parsedHtml: string;
 };
 
 export const chatListAtom = atom<ChatMessage[]>([]);

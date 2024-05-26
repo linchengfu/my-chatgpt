@@ -35,7 +35,7 @@ export default function UserInput() {
     setInputValue(event.target.value);
   };
 
-  const [, setChatList] = useAtom(chatListAtom);
+  const [chatList, setChatList] = useAtom(chatListAtom);
 
   const [keyValue] = useAtom(apiKeyAtom);
   const send = async () => {
@@ -43,23 +43,32 @@ export default function UserInput() {
 
     const userChat: ChatMessage = {
       id: Date.now().toString(),
-      content: inputValue,
-      type: "user",
+      message: {
+        content: inputValue,
+        role: "user",
+      },
+      parsedHtml: inputValue,
     };
+    const newList = [...chatList, userChat];
 
     setChatList((prev) => [...prev, userChat]);
 
+    const Messages = newList.map((item) => item.message);
+
     try {
       setLoading(true);
-      const res = await sendMessage(inputValue, keyValue);
+      const res = await sendMessage(Messages, keyValue);
       console.log("🚀 ~ send ~ res:", res);
 
       const parsedHtml = await marked.parse(res.choices[0].message.content);
-
+      const choices = res.choices;
       const gptChat: ChatMessage = {
         id: res.id,
-        content: parsedHtml,
-        type: "gpt",
+        message: {
+          role: choices[choices.length - 1].message.role,
+          content: choices[choices.length - 1].message.content,
+        },
+        parsedHtml,
       };
 
       setChatList((prev) => [...prev, gptChat]);

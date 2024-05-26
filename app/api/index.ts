@@ -1,6 +1,10 @@
+export type Message = {
+  content: string;
+  role: "user" | "assistant" | "system" | "tool";
+};
 export type ChoiceType = {
   index: number;
-  message: { content: string; role: string };
+  message: Message;
   finish_reason: string;
 };
 
@@ -9,7 +13,7 @@ export type MessageResponse = {
   choices: ChoiceType[];
 };
 
-export const sendMessage = async (message: string, apiKey: string) => {
+export const sendMessage = async (messages: Message[], apiKey: string) => {
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -20,7 +24,7 @@ export const sendMessage = async (message: string, apiKey: string) => {
     },
     body: JSON.stringify({
       model: "mistralai/mistral-7b-instruct:free",
-      messages: [{ role: "user", content: message }],
+      messages,
     }),
   });
 
