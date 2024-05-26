@@ -18,7 +18,7 @@ const PreWrapper = styled("pre")(({ theme }) => ({
 
 export default function ChatList() {
   const [chatList] = useAtom(chatListAtom);
-  const listRef = React.useRef<HTMLLIElement>(null);
+  const listRef = React.useRef<HTMLUListElement>(null);
 
   React.useEffect(() => {
     console.log("listRef", listRef.current);
