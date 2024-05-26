@@ -18,6 +18,15 @@ const PreWrapper = styled("pre")(({ theme }) => ({
 
 export default function ChatList() {
   const [chatList] = useAtom(chatListAtom);
+  const listRef = React.useRef<HTMLLIElement>(null);
+
+  React.useEffect(() => {
+    console.log("listRef", listRef.current);
+    if (listRef.current) {
+      // 滚动到底部
+      listRef.current.scrollTop = listRef.current.scrollHeight;
+    }
+  }, [chatList]);
 
   return !chatList.length ? (
     <Box
@@ -38,6 +47,7 @@ export default function ChatList() {
     </Box>
   ) : (
     <List
+      ref={listRef}
       sx={{ width: "100%", bgcolor: "background.paper", overflowY: "auto" }}
     >
       {chatList.map((chat) => {
