@@ -5,7 +5,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Button, OutlinedInput } from "@mui/material";
+import { Alert, Button, OutlinedInput, Snackbar } from "@mui/material";
 import { useAtom } from "jotai";
 import { apiKeyAtom } from "../store";
 
@@ -14,8 +14,15 @@ export default function HeaderBar() {
 
   const [value, setValue] = React.useState("");
 
+  const [openAlert, setOpenAlert] = React.useState(false);
+
+  const handleClose = () => {
+    setOpenAlert(false);
+  };
+
   const setApiKey = () => {
     setKey(value);
+    setOpenAlert(true);
   };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -56,6 +63,22 @@ export default function HeaderBar() {
           </Button>
         </Toolbar>
       </AppBar>
+
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Set OPENROUTER_API_KEY success!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
