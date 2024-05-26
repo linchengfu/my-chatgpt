@@ -1,9 +1,14 @@
-"use client";
-
 import { Box, Container } from "@mui/material";
 import ChatList from "./components/ChatList";
 import UserInput from "./components/UserInput";
 import HeaderBar from "./components/Header";
+
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Mistral 7B chat bot",
+  description: "Mistral 7B Instruct (free) chat bot",
+};
 
 export default function Home() {
   return (
