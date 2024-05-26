@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { OutlinedInput } from "@mui/material";
+import { Alert, OutlinedInput, Snackbar } from "@mui/material";
 
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import AutorenewTwoToneIcon from "@mui/icons-material/AutorenewTwoTone";
@@ -30,6 +30,7 @@ const AutorenewTwoToneIconWrapper = styled(AutorenewTwoToneIcon)(
 export default function UserInput() {
   const [inputValue, setInputValue] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [openAlert, setOpenAlert] = React.useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -38,8 +39,15 @@ export default function UserInput() {
   const [chatList, setChatList] = useAtom(chatListAtom);
 
   const [keyValue] = useAtom(apiKeyAtom);
+
+  const handleClose = () => {
+    setOpenAlert(false);
+  };
   const send = async () => {
-    if (!keyValue || !inputValue || loading) return;
+    if (!keyValue) {
+      return setOpenAlert(true);
+    }
+    if (!inputValue || loading) return;
 
     const userChat: ChatMessage = {
       id: Date.now().toString(),
@@ -80,8 +88,9 @@ export default function UserInput() {
     }
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); // 阻止默认的回车换行行为
+    if (e.key === "Enter" && !e.shiftKey) {
+      // Prevent the default behavior of the Enter key
+      e.preventDefault();
 
       send();
     }
@@ -113,6 +122,22 @@ export default function UserInput() {
         }
         sx={{ alignItems: "flex-start" }}
       />
+
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          Please input your OPENROUTER_API_KEY
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

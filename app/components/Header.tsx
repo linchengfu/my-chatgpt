@@ -5,7 +5,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { TextField } from "@mui/material";
+import { Button, OutlinedInput } from "@mui/material";
 import { useAtom } from "jotai";
 import { apiKeyAtom } from "../store";
 
@@ -38,15 +38,22 @@ export default function HeaderBar() {
           >
             ChatGPT
           </Typography>
-          <TextField
+
+          <OutlinedInput
             size="small"
             value={value}
             onChange={handleInputChange}
             id="outlined-basic"
-            label="Input OpenRouter API key"
-            variant="outlined"
+            placeholder="Input OpenRouter API key"
             onKeyDown={setApiKey}
           />
+          <Button
+            variant="contained"
+            style={{ marginLeft: "8px" }}
+            onClick={setApiKey}
+          >
+            Confirm
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
