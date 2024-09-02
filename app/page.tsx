@@ -4,6 +4,7 @@ import UserInput from "../components/UserInput";
 import HeaderBar from "../components/Header";
 
 import type { Metadata } from "next";
+import BlurIn from "@/components/magicui/blur-in";
 
 export const metadata: Metadata = {
   title: "Mistral 7B chat bot",
@@ -31,7 +32,6 @@ export default async function Home() {
       maxWidth="lg"
       sx={{ display: "flex", flexDirection: "column", height: "100vh" }}
     >
-      <img src={data[0].url} width="300" />
       <HeaderBar />
       <Box
         sx={{
@@ -48,6 +48,8 @@ export default async function Home() {
         flex="1 1 auto"
       >
         <ChatList />
+
+        <BlurIn word="ChatGPT" />
         <UserInput />
       </Box>
     </Container>
