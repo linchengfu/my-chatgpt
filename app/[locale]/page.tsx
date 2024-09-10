@@ -1,10 +1,11 @@
 import { Box, Container } from "@mui/material";
-import ChatList from "../components/ChatList";
-import UserInput from "../components/UserInput";
-import HeaderBar from "../components/Header";
+import ChatList from "@/components/ChatList";
+import UserInput from "@/components/UserInput";
+import HeaderBar from "@/components/Header";
 
 import type { Metadata } from "next";
 import BlurIn from "@/components/magicui/blur-in";
+import { useTranslations } from "next-intl";
 
 export const metadata: Metadata = {
   title: "Mistral 7B chat bot",
@@ -25,15 +26,16 @@ async function getData() {
   return res.json();
 }
 
-export default async function Home() {
-  const data = await getData();
+export default function Home() {
+  const t = useTranslations("HomePage");
+  // const data = await getData();
   return (
     <Container
       maxWidth="lg"
       sx={{ display: "flex", flexDirection: "column", height: "100vh" }}
     >
       <HeaderBar />
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <h1>{t("title")}</h1>
 
       <Box
         sx={{
