@@ -9,6 +9,7 @@ const nextConfig = {
       fullUrl: true
     }
   },
+  output: "export",
   experimental: {
 
     // 为每个路由生成类型声明
