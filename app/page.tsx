@@ -1,3 +1,4 @@
 export default function Home() {
-  return <h1>Home</h1>;
+  const currentTime = new Date();
+  return <h1>Home page {currentTime.getTime()}</h1>;
 }
